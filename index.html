@@ -20,6 +20,17 @@
 </head>
 <body>
 
+    <!-- Main Page Elements -->
+    <div class="container" id="titleElementsDiv">
+        <h1 class="text-center">Molecules Marking Tool</h1>
+    </div>    
+
+    <!-- Questions Div (This is currently populated on my own) -->
+    <div class="container text-center" id="questionsDiv">
+        <div id="questionChemViewer"></div>
+        <h4><b>Reagents and Conditions:</b> KMnO4, H2SO4, heat</h4>
+    </div>        
+
     <!-- For collapse animation -->
 
     <div class="d-flex justify-content-center align-items-center mt-5">
@@ -48,12 +59,12 @@
 
     <div class="container" id="answerDivs">
         <div class="row">
-          <div class="col-sm-6" id="col1">
+          <div class="col-sm-6 text-center" id="col1">
             <div id="ansDiv1" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv1')" class="p-1">Product 1</div>
             <div id="ansDiv3" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv3')" class="p-1">Product 3</div>
             <div id="ansDiv5" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv5')" class="p-1">Product 5</div>
           </div>
-          <div class="col-sm-6" id="col2">
+          <div class="col-sm-6 text-center" id="col2">
             <div id="ansDiv2" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv2')" class="p-1">Product 2</div>
             <div id="ansDiv4" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv4')" class="p-1">Product 4</div>
           </div>
@@ -61,6 +72,12 @@
     </div>
 
     <script>
+
+        var questionChemViewer = new Kekule.ChemWidget.Viewer(document.getElementById('questionChemViewer'))
+
+        var cmlData = '<cml xmlns="http://www.xml-cml.org/schema"><molecule id="m1"><atomArray><atom id="a1" elementType="C" x2="13.622666666666666" y2="44.093333333333334"/><atom id="a2" elementType="C" x2="14.315486989694213" y2="44.49333333333333"/><atom id="a3" elementType="C" x2="15.008307312721765" y2="44.093333333333334"/><atom id="a4" elementType="C" x2="14.315486989694213" y2="45.29333333333334"/><atom id="a5" elementType="C" x2="13.622666666666658" y2="45.693333333333335"/></atomArray><bondArray><bond id="b1" order="S" atomRefs2="a1 a2"/><bond id="b2" order="S" atomRefs2="a2 a3"/><bond id="b3" order="D" atomRefs2="a2 a4"/><bond id="b4" order="S" atomRefs2="a4 a5"/></bondArray></molecule></cml>';
+        var myMolecule = Kekule.IO.loadFormatData(cmlData, 'cml');
+        questionChemViewer.setChemObj(myMolecule);
 
         // Define global variables
         var globalCurrentDiv
@@ -205,12 +222,14 @@
 
                 // Save as SMILES format
                 var smiles_submit = Kekule.IO.saveFormatData(molecule_submit, 'smi')
-                var cml_submit = Kekule.IO.saveFormatData(molecule_submit, 'mol')
+                var mol_submit = Kekule.IO.saveFormatData(molecule_submit, 'mol')
+                var cml_submit = Kekule.IO.saveFormatData(molecule_submit, 'cml')
 
                 // console.log(smiles_submit)
+                // console.log(mol_submit)
                 // console.log(cml_submit)
 
-                var myMolecule = Kekule.IO.loadFormatData(cml_submit, 'mol');
+                var myMolecule = Kekule.IO.loadFormatData(mol_submit, 'mol');
                 chemViewer.setChemObj(myMolecule);
 
             }catch(err){
