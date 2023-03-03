@@ -28,9 +28,9 @@
     <!-- Questions Div (This is currently populated on my own) -->
     <div class="container text-center col-sm-6" id="questionsDiv">
         <div class="card">
-            <div class="card-body">
-                <div id="questionChemViewer"></div>
-                <p><b>Reagents and Conditions:</b><br>KMnO4, H2SO4, heat</p>
+            <div class="card-body" style="padding: 0.5rem;">
+                <div id="questionChemViewer"></div><br>
+                <b>Reagents and Conditions:</b><br>KMnO4, H2SO4, heat
             </div>
           </div>
     </div>
@@ -84,8 +84,8 @@
 
     <!-- Submission buttons -->
     <div id="submissionBox" class="container text-center">
-        <button id="submissionButton" class="btn btn-primary m-1">Submit</button>
-        <button id="submissionButton" class="btn btn-secondary m-1">Reveal Answers</button>
+        <button id="submissionButton" class="btn btn-primary m-1" onclick="submitAnswers()">Submit</button>
+        <!-- <button id="submissionButton" class="btn btn-secondary m-1">Reveal Answers</button> -->
     </div>
 
     <script>
@@ -265,7 +265,6 @@
                     
                     return
                 }
-
         }
 
         // Add JQuery code to slide down div
@@ -306,13 +305,45 @@
         });
         
         // Script to mark stuff
-
+        function submitAnswers(){
+            alert("All answers correct!")
+        }
 
 
 
 
 
     </script>
+    
+
+<!-- Some test code for pop-up to show reference answers -->
+
+
+<button onclick="showPopup()">Show Popup</button>
+
+<div id="popup" style="display: none; z-index: 9999;">
+  <h2>Popup Content</h2>
+  <p>This is the content of the popup.</p>
+  <button onclick="hidePopup()">Close Popup</button>
+</div>
+
+<script>
+  function showPopup() {
+    document.getElementById("popup").style.display = "block";
+  }
+  
+  function hidePopup() {
+    document.getElementById("popup").style.display = "none";
+  }
+</script>
+
+
+
+
+
+
+
+
     
     <style>
         .container-flex {
@@ -338,7 +369,7 @@
             padding: 5px;
         }
         #questionChemViewer {
-            height: 175px;
+            height: 150px;
         }
 
     </style>
