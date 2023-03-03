@@ -22,13 +22,13 @@
 
     <!-- Main Page Elements -->
     <div class="container" id="titleElementsDiv">
-        <h1 class="text-center">Molecules Marking Tool</h1>
+        <h2 class="text-center">Molecules Marking Tool</h2>
     </div>    
 
     <!-- Questions Div (This is currently populated on my own) -->
     <div class="container text-center" id="questionsDiv">
         <div id="questionChemViewer"></div>
-        <h4><b>Reagents and Conditions:</b> KMnO4, H2SO4, heat</h4>
+        <p><b>Reagents and Conditions:</b> KMnO4, H2SO4, heat</p>
     </div>        
 
     <!-- For collapse animation -->
@@ -78,18 +78,6 @@
             <div id="ansDiv5" class="item-wide" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv5')">Product 5</div>
         </div>
     </div>
-
-    <!-- <div class="container" id="answerDivs">
-        <div class="row">
-          <div class="col-sm-6 text-center" id="col1">
-
-          </div>
-          <div class="col-sm-6 text-center" id="col2">
-            <div id="ansDiv2" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv2')" class="p-1">Product 2</div>
-            <div id="ansDiv4" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv4')" class="p-1">Product 4</div>
-          </div>
-        </div>
-    </div> -->
 
     <script>
 
@@ -339,6 +327,9 @@
         .item-wide {
             width: 100%;
             padding: 5px;
+        }
+        #questionChemViewer {
+            height: 100px;
         }
 
     </style>
