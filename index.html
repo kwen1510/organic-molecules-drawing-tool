@@ -26,15 +26,19 @@
     </div>    
 
     <!-- Questions Div (This is currently populated on my own) -->
-    <div class="container text-center" id="questionsDiv">
-        <div id="questionChemViewer"></div>
-        <p><b>Reagents and Conditions:</b> KMnO4, H2SO4, heat</p>
-    </div>        
+    <div class="container text-center col-sm-6" id="questionsDiv">
+        <div class="card">
+            <div class="card-body">
+                <div id="questionChemViewer"></div>
+                <p><b>Reagents and Conditions:</b> KMnO4, H2SO4, heat</p>
+            </div>
+          </div>
+    </div>
 
     <!-- For collapse animation -->
 
     <div class="d-flex justify-content-center align-items-center mt-5">
-      </div>  
+      </div>
         <div class="collapse" id="collapseDiv">
             <!-- Div to center stuff -->
             <div class="d-flex justify-content-center align-items-center">
@@ -326,6 +330,7 @@
         }
         .item-wide {
             width: 100%;
+            height: 100px;
             padding: 5px;
         }
         #questionChemViewer {
