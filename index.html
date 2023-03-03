@@ -57,19 +57,39 @@
 
     <!-- End -->
 
-    <div class="container" id="answerDivs">
-        <div class="row flex-nowrap">
-          <div class="col-sm-6 text-center" id="col1">
+    <div class="container-flex">
+        <div class="left-column">
             <div id="ansDiv1" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv1')" class="p-1">Product 1</div>
+        </div>
+        <div class="right-column">
+            <div id="ansDiv2" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv2')" class="p-1">Product 2</div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="left-column">
             <div id="ansDiv3" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv3')" class="p-1">Product 3</div>
+        </div>
+        <div class="right-column">
+            <div id="ansDiv4" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv4')" class="p-1">Product 4</div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="left-column">
             <div id="ansDiv5" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv5')" class="p-1">Product 5</div>
+        </div>
+    </div>
+
+    <!-- <div class="container" id="answerDivs">
+        <div class="row">
+          <div class="col-sm-6 text-center" id="col1">
+
           </div>
           <div class="col-sm-6 text-center" id="col2">
             <div id="ansDiv2" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv2')" class="p-1">Product 2</div>
             <div id="ansDiv4" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv4')" class="p-1">Product 4</div>
           </div>
         </div>
-    </div>
+    </div> -->
 
     <script>
 
@@ -158,8 +178,18 @@
                 }
             }
 
-            // // Clear composer widget
+            // // Clear composer widget and create a new one
             composer = new Kekule.Editor.Composer(document.getElementById('composerDiv'));
+
+            composer.setDimension(`${composerWidth}px`, `${composerHeight}px`);
+
+            composer.getEditorConfigs().getInteractionConfigs().setAllowUnknownAtomSymbol(false);
+
+            // Change the UI of the editor
+            composer.setCommonToolButtons(['newDoc','undo','redo','zoomIn', 'zoomOut'])
+
+            // Comment the next line out to get all functions
+            composer.setChemToolButtons(['manipulate','erase','bond','atomAndFormula','ring','charge'])
 
             // Update with current structure
             switch(globalCurrentDiv) {
@@ -288,5 +318,26 @@
 
     </script>
     
+    <style>
+        .container-flex {
+            display: flex;
+        }
+
+        .left-column {
+            flex: 1;
+            display: flex;
+            justify-content: right;
+            align-items: right;
+        }
+
+        .right-column {
+            flex: 1;
+            display: flex;
+            justify-content: left;
+            align-items: left;
+        }
+
+    </style>
+
 </body>
 </html>
