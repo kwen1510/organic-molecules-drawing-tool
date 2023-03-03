@@ -21,7 +21,7 @@
 <body>
 
     <!-- Main Page Elements -->
-    <div class="container" id="titleElementsDiv">
+    <div class="container mt-3" id="titleElementsDiv">
         <h2 class="text-center">Molecules Marking Tool</h2>
     </div>    
 
@@ -30,14 +30,14 @@
         <div class="card">
             <div class="card-body">
                 <div id="questionChemViewer"></div>
-                <p><b>Reagents and Conditions:</b> KMnO4, H2SO4, heat</p>
+                <p><b>Reagents and Conditions:</b><br>KMnO4, H2SO4, heat</p>
             </div>
           </div>
     </div>
 
     <!-- For collapse animation -->
 
-    <div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="d-flex justify-content-center align-items-center mt-1">
       </div>
         <div class="collapse" id="collapseDiv">
             <!-- Div to center stuff -->
@@ -56,7 +56,6 @@
                     Close Composer
                 </button>
             </div>
-
       </div>
 
     <!-- End -->
@@ -81,6 +80,12 @@
         <div class="left-column">
             <div id="ansDiv5" class="item-wide" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv5')">Product 5</div>
         </div>
+    </div>
+
+    <!-- Submission buttons -->
+    <div id="submissionBox" class="container text-center">
+        <button id="submissionButton" class="btn btn-primary m-1">Submit</button>
+        <button id="submissionButton" class="btn btn-secondary m-1">Reveal Answers</button>
     </div>
 
     <script>
@@ -330,11 +335,11 @@
         }
         .item-wide {
             width: 100%;
-            height: 100px;
+            height: 175px;
             padding: 5px;
         }
         #questionChemViewer {
-            height: 100px;
+            height: 175px;
         }
 
     </style>
