@@ -85,7 +85,15 @@
     <!-- Submission buttons -->
     <div id="submissionBox" class="container text-center">
         <button id="submissionButton" class="btn btn-primary m-1" onclick="submitAnswers()">Submit</button>
-        <!-- <button id="submissionButton" class="btn btn-secondary m-1">Reveal Answers</button> -->
+        <!-- Button to trigger modal -->
+        <button id="openModal" class="btn btn-secondary m-1">Reveal Answers</button>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <div id="modelAnswerDiv" class="text-center">Model Answer Goes Here</div>
+        </div>
     </div>
 
     <script>
@@ -159,6 +167,9 @@
 
 
         function highlightBox(ansDiv){
+
+            // Scroll to question Div
+            scrollToDiv("questionsDiv")
             
             // console.log(ansDiv)
 
@@ -309,9 +320,15 @@
             alert("All answers correct!")
         }
 
+        function scrollToDiv(divName) {
+            // console.log(`Scrolled into ${divName}`)
+            var div = document.getElementById(divName);
+            div.scrollIntoView();
+        }
 
 
 
+        
 
     </script>
     
@@ -319,27 +336,34 @@
 <!-- Some test code for pop-up to show reference answers -->
 
 
-<button onclick="showPopup()">Show Popup</button>
 
-<div id="popup" style="display: none; z-index: 9999;">
-  <h2>Popup Content</h2>
-  <p>This is the content of the popup.</p>
-  <button onclick="hidePopup()">Close Popup</button>
-</div>
+  
+
+
 
 <script>
-  function showPopup() {
-    document.getElementById("popup").style.display = "block";
-  }
-  
-  function hidePopup() {
-    document.getElementById("popup").style.display = "none";
-  }
+    // Get the modal and the button that opens it
+    var modal = document.getElementById("modal");
+    var btn = document.getElementById("openModal");
+    var span = document.getElementById("closeModal");
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
-
-
-
-
 
 
 
@@ -371,6 +395,41 @@
         #questionChemViewer {
             height: 150px;
         }
+
+        .modal {
+            display: none; /* Hide the modal by default */
+            position: fixed; /* Position the modal */
+            z-index: 1; /* Set the modal to be on top of all other elements */
+            left: 0;
+            top: 0;
+            width: 100%; /* Set the width to cover the entire page */
+            height: 100%; /* Set the height to cover the entire page */
+            overflow: auto; /* Enable scrolling if the content is too tall for the viewport */
+            background-color: rgba(0, 0, 0, 0.4); /* Set a semi-transparent background */
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto; /* Center the modal vertically and horizontally */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Set the width of the modal */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
 
     </style>
 
