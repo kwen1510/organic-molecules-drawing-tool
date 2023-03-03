@@ -59,23 +59,23 @@
 
     <div class="container-flex">
         <div class="left-column">
-            <div id="ansDiv1" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv1')" class="p-1">Product 1</div>
+            <div id="ansDiv1" class="item-wide" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv1')">Product 1</div>
         </div>
         <div class="right-column">
-            <div id="ansDiv2" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv2')" class="p-1">Product 2</div>
+            <div id="ansDiv2" class="item-wide" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv2')">Product 2</div>
         </div>
     </div>
     <div class="container-flex">
         <div class="left-column">
-            <div id="ansDiv3" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv3')" class="p-1">Product 3</div>
+            <div id="ansDiv3" class="item-wide" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv3')">Product 3</div>
         </div>
         <div class="right-column">
-            <div id="ansDiv4" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv4')" class="p-1">Product 4</div>
+            <div id="ansDiv4" class="item-wide" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv4')">Product 4</div>
         </div>
     </div>
     <div class="container-flex">
         <div class="left-column">
-            <div id="ansDiv5" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv5')" class="p-1">Product 5</div>
+            <div id="ansDiv5" class="item-wide" style="display:none; border: 1px solid black" onclick="highlightBox('ansDiv5')">Product 5</div>
         </div>
     </div>
 
@@ -116,7 +116,7 @@
 
         var composerWidth = screenWidth
 
-        var composerHeight = 2/3 * composerWidth
+        var composerHeight = 3/4 * composerWidth
 
         // console.log(screenWidth, composerHeight, composerWidth)
 
@@ -335,6 +335,10 @@
             display: flex;
             justify-content: left;
             align-items: left;
+        }
+        .item-wide {
+            width: 50%;
+            padding: 5px;
         }
 
     </style>
