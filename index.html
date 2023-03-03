@@ -84,7 +84,7 @@
 
     <!-- Submission buttons -->
     <div id="submissionBox" class="container text-center">
-        <button id="submissionButton" class="btn btn-primary m-1" onclick="submitAnswers()">Submit</button>
+        <button id="submissionButton" class="btn btn-primary m-1" onclick="markSynthesisAnswer()">Submit</button>
         <!-- Button to trigger modal -->
         <button id="openModal" class="btn btn-secondary m-1">Reveal Answers</button>
     </div>
@@ -92,7 +92,13 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <span id="closeModal" class="close">&times;</span>
-            <div id="modelAnswerDiv" class="text-center">Model Answer Goes Here</div>
+            <div id="modelAnswerDiv" class="answer-container">
+                <div id="modelAnsDiv1" class="inner-div" style="display:none; border: 1px solid black"></div>
+                <div id="modelAnsDiv2" class="inner-div" style="display:none; border: 1px solid black"></div>
+                <div id="modelAnsDiv3" class="inner-div" style="display:none; border: 1px solid black"></div>
+                <div id="modelAnsDiv4" class="inner-div" style="display:none; border: 1px solid black"></div>
+                <div id="modelAnsDiv5" class="inner-div" style="display:none; border: 1px solid black"></div>
+            </div>
         </div>
     </div>
 
@@ -144,6 +150,12 @@
         var chemViewer4 = new Kekule.ChemWidget.Viewer(document.getElementById('ansDiv4'));
         var chemViewer5 = new Kekule.ChemWidget.Viewer(document.getElementById('ansDiv5'));
 
+        // Create answer viewers here
+        var ansChemViewer1 = new Kekule.ChemWidget.Viewer(document.getElementById('modelAnsDiv1'));
+        var ansChemViewer2 = new Kekule.ChemWidget.Viewer(document.getElementById('modelAnsDiv2'));
+        var ansChemViewer3 = new Kekule.ChemWidget.Viewer(document.getElementById('modelAnsDiv3'));
+        var ansChemViewer4 = new Kekule.ChemWidget.Viewer(document.getElementById('modelAnsDiv4'));
+        var ansChemViewer5 = new Kekule.ChemWidget.Viewer(document.getElementById('modelAnsDiv5'));
 
         /*
             LOOK HERE!!!
@@ -154,7 +166,7 @@
 
 
         // This part is dynamic
-        var questionMolecules = [1,2,3] // Change this to reflect the number of answer molecules from database
+        var questionMolecules = [1,2] // Change this to reflect the number of answer molecules from database
 
 
 
@@ -163,6 +175,7 @@
         // Example: A loop of 5 divs
         for (var a = 1; a <= numberOfChemViewers; a++){
             document.getElementById(`ansDiv${a}`).style.display = "block"
+            document.getElementById(`modelAnsDiv${a}`).style.display = "block"
         }
 
 
@@ -314,11 +327,6 @@
                 $('#collapseDiv').slideUp({duration: 300});
             });
         });
-        
-        // Script to mark stuff
-        function submitAnswers(){
-            alert("All answers correct!")
-        }
 
         function scrollToDiv(divName) {
             // console.log(`Scrolled into ${divName}`)
@@ -327,48 +335,148 @@
         }
 
 
+        /*
+
+        LOOK HERE
+
+        Temporary answers
+
+        */
+
+        //Temporary answer
+        tempAnswer = ['<cml xmlns="http://www.xml-cml.org/schema"><molecule id="m1"><atomArray><atom id="a1" elementType="C" x2="13.608445312499999" y2="41.83333268229167"/><atom id="a2" elementType="C" x2="14.301265635527548" y2="42.23333268229167"/><atom id="a3" elementType="C" x2="14.994085958555099" y2="41.83333268229167"/><atom id="a4" elementType="O" x2="14.301265635527546" y2="43.033332682291665"/></atomArray><bondArray><bond id="b1" order="S" atomRefs2="a1 a2"/><bond id="b2" order="S" atomRefs2="a2 a3"/><bond id="b3" order="D" atomRefs2="a2 a4"/></bondArray></molecule></cml>', '<cml xmlns="http://www.xml-cml.org/schema"><molecule id="m1"><atomArray><atom id="a1" elementType="C" x2="12.911555989583333" y2="44.99066666666667"/><atom id="a2" elementType="C" x2="13.604376312610881" y2="45.39066666666667"/><atom id="a3" elementType="O" x2="14.29719663563843" y2="44.99066666666667"/><atom id="a4" elementType="O" x2="13.604376312610881" y2="46.190666666666665"/></atomArray><bondArray><bond id="b1" order="S" atomRefs2="a1 a2"/><bond id="b2" order="S" atomRefs2="a2 a3"/><bond id="b3" order="D" atomRefs2="a2 a4"/></bondArray></molecule></cml>']
+
+        // Code to populate answers
+        var productSmiles = []
+    
+        var numberOfProducts = tempAnswer.length
+
+        for (var product=0; product<numberOfProducts; product++){
+
+            teacher_cml = tempAnswer[product]
+
+            var teacherMolecule = Kekule.IO.loadFormatData(teacher_cml, 'cml')
+
+            switch(`modelAnsDiv${product+1}`) {
+                case 'modelAnsDiv1':
+                    molecule = ansChemViewer1.setChemObj(teacherMolecule);
+                    break;
+                case 'modelAnsDiv2':
+                    molecule = ansChemViewer2.setChemObj(teacherMolecule);
+                    break;
+                case 'modelAnsDiv3':
+                    molecule = ansChemViewer3.setChemObj(teacherMolecule);
+                    break;
+                case 'modelAnsDiv4':
+                    molecule = ansChemViewer4.setChemObj(teacherMolecule);
+                    break;
+                case 'modelAnsDiv5':
+                    molecule = ansChemViewer5.setChemObj(teacherMolecule);
+                    break;
+                default:
+                    // handle invalid input
+                    break;
+            }
+
+            var productSmile = Kekule.IO.saveFormatData(teacherMolecule, 'smi')
+
+            productSmiles.push(productSmile)
+
+        }
+
+        // console.log(productSmiles)
+
+        // Store model answers
+        localStorage.setItem('productSMILES', JSON.stringify(productSmiles))
+
+        function markSynthesisAnswer(){
+
+            var model_ans_array = JSON.parse(localStorage.getItem('productSMILES'))
+
+            console.log("Model answers:")
+            console.log(model_ans_array)
+
+            // Get model answers if it exists
+
+            var molecules_submission = []
+
+            for (var idx = 0; idx < model_ans_array.length; idx++){
+
+                switch(`modelAnsDiv${idx+1}`) {
+                case 'modelAnsDiv1':
+                    studentMolecule = chemViewer1.getChemObj();
+                    break;
+                case 'modelAnsDiv2':
+                    studentMolecule = chemViewer2.getChemObj();
+                    break;
+                case 'modelAnsDiv3':
+                    studentMolecule = chemViewer3.getChemObj();
+                    break;
+                case 'modelAnsDiv4':
+                    studentMolecule = chemViewer4.getChemObj();
+                    break;
+                case 'modelAnsDiv5':
+                    studentMolecule = chemViewer5.getChemObj();
+                    break;
+                default:
+                    // handle invalid input
+                    break;
+            }
+
+                var studentMoleculeSMILES = Kekule.IO.saveFormatData(studentMolecule, 'smi')
+
+                molecules_submission.push(studentMoleculeSMILES)
+
+            }
+
+            console.log("Submission array: ")
+            console.log(molecules_submission)
+
+            // Compare answers here
+
+            console.log("Comparing answers...")
+
+            let difference = model_ans_array.filter(x => !molecules_submission.includes(x));
+
+            console.log(difference)
+
+            var numberOfIncorrect = difference.length
+
+            if (numberOfIncorrect == 0){
+                alert(`All answers correct!`)
+            }else{
+                alert(`${numberOfIncorrect} incorrect answer(s)\nPlease try again.`)
+            }
+
+        }
+
+        // Code to reveal answers
+        // Get the modal and the button that opens it
+        var modal = document.getElementById("modal");
+        var btn = document.getElementById("openModal");
+        var span = document.getElementById("closeModal");
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
 
         
 
     </script>
-    
 
-<!-- Some test code for pop-up to show reference answers -->
-
-
-
-  
-
-
-
-<script>
-    // Get the modal and the button that opens it
-    var modal = document.getElementById("modal");
-    var btn = document.getElementById("openModal");
-    var span = document.getElementById("closeModal");
-
-    // When the user clicks the button, open the modal
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>
-
-
-
-
-    
     <style>
         .container-flex {
             display: flex;
@@ -429,7 +537,16 @@
             text-decoration: none;
             cursor: pointer;
         }
-
+        .answer-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .inner-div {
+            padding: 10px;
+            text-align: center;
+            flex: 1 1 200px;
+            margin: 10px;
+        }
 
     </style>
 
